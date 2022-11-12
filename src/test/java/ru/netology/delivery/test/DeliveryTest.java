@@ -18,7 +18,7 @@ class DeliveryTest {
     @BeforeEach
     void setup() {
         open("http://localhost:9999");
-        //Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
     }
 
 
@@ -39,13 +39,17 @@ class DeliveryTest {
         $("[name='phone']").setValue(validUser.getPhone());
         $("[data-test-id = 'agreement']").click();
         $$("button").find(exactText("Запланировать")).click();
-        $("[data-test-id='success-notification']").shouldHave(Condition.text("Встреча успешно запланирована на " + firstMeetingDate), Duration.ofSeconds(15));
+        $("[data-test-id='success-notification']")
+                .shouldBe(Condition.visible, Duration.ofSeconds(15))
+                .shouldHave(Condition.text("Встреча успешно запланирована на " + firstMeetingDate));
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         $("[data-test-id = 'date'] input").setValue(secondMeetingDate);
         $$("button").find(exactText("Запланировать")).click();
         $("[data-test-id='replan-notification']").shouldHave(Condition.text("У вас уже запланирована встреча на другую дату."));
         $$("button").find(exactText("Перепланировать")).click();
-        $("[data-test-id='success-notification']").shouldHave(Condition.text("Встреча успешно запланирована на " + secondMeetingDate), Duration.ofSeconds(15));
+        $("[data-test-id='success-notification']")
+                .shouldBe(Condition.visible, Duration.ofSeconds(15))
+                .shouldHave(Condition.text("Встреча успешно запланирована на " + secondMeetingDate));
 
     }
 }
