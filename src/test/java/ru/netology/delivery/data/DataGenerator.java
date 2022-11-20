@@ -6,6 +6,7 @@ import lombok.Value;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.Random;
 
 public class DataGenerator {
     private DataGenerator() {
@@ -16,10 +17,18 @@ public class DataGenerator {
         return date;
     }
 
-    public static String generateCity(String locale) {
-        Faker faker = new Faker(new Locale("ru"));
-        String city = faker.address().city();
-        return city;
+    public static String generateCity() {
+        var cities = new String [] {"Абакан", "Анадырь", "Архангельск", "Астрахань", "Барнаул", "Белгород", "Биробиджан", "Благовещенск", "Брянск",
+                "Великий Новгород", "Владивосток", "Владикавказ", "Владимир", "Волгоград", "Вологда", "Воронеж", "Горно-Алтайск",
+                "Грозный", "Екатеринбург", "Иваново", "Ижевск", "Иркутск", "Йошкар-Ола", "Казань", "Калининград", "Калуга", "Кемерово",
+                "Киров", "Кострома", "Краснодар", "Красноярск", "Курган", "Курск", "Кызыл", "Липецк", "Магадан", "Магас", "Майкоп",
+                "Махачкала", "Москва", "Мурманск", "Нальчик", "Нарьян-Мар", "Нижний Новгород", "Новосибирск", "Омск", "Орёл", "Оренбург",
+                "Пенза", "Пермь", "Петрозаводск", "Петропавловск-Камчатский", "Псков", "Ростов-на-Дону", "Рязань", "Салехард", "Самара",
+                "Санкт-Петербург", "Саранск", "Саратов", "Севастополь", "Симферополь", "Смоленск", "Ставрополь", "Сыктывкар",
+                "Тамбов", "Тверь", "Томск", "Тула", "Тюмень", "Улан-Удэ", "Ульяновск", "Уфа", "Хабаровск", "Ханты-Мансийск", "Чебоксары",
+                "Челябинск", "Черкесск", "Чита", "Элиста", "Южно-Сахалинск", "Якутск", "Ярославль"};
+        return cities[new Random().nextInt(cities.length)];
+
     }
 
     public static String generateName(String locale) {
@@ -39,7 +48,7 @@ public class DataGenerator {
         }
 
         public static UserInfo generateUser(String locale) {
-            UserInfo user = new UserInfo(generateCity(locale), generateName(locale), generatePhone(locale));
+            UserInfo user = new UserInfo(generateCity(), generateName(locale), generatePhone(locale));
             return user;
         }
     }
